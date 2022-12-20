@@ -34,6 +34,58 @@
                 font-size: 3.5rem;
             }
         }
+
+        h1 {
+            color: red;
+        }
+
+        nav:nth-child(n) {
+            color: blue;
+        }
+
+        .jumbotron p:nth-of-type(2) a {
+            color: green;
+        }
+
+        .col-md-8.blog-main div:nth-of-type(1) {
+            background-color: rgba(128, 128, 128, 0.342);
+        }
+
+        .col-md-8.blog-main div:nth-of-type(1) hr {
+            background-color: red;
+        }
+
+        nav span:nth-of-type(2n) {
+            color: red;
+        }
+
+        .col-md-4.blog-sidebar .p-4 .list-unstyled.mb-0 li a {
+            color: red;
+        }
+
+        .col-md-8.blog-main div:nth-of-type(2) .blog-post-meta a {
+            color: aqua;
+        }
+
+        .col-md-8.blog-main div:nth-of-type(3) ul li:nth-of-type(2) {
+            color: red;
+        }
+
+        .float-right.mb-3.mr-3 {
+            color: red;
+        }
+
+        .blog-pagination a:nth-of-type(2) {
+            background-color: aquamarine;
+        }
+
+        footer a:nth-of-type(2) {
+            color: orange;
+        }
+
+
+
+
     </style>
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet" />
 </head>
@@ -305,7 +357,7 @@
                 <!-- /.blog-post -->
 
                 <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
+                    <a class="btn btn-outline-primary" onclick="removeTheLastBlogPost()">Older</a>
                     <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
                 </nav>
             </div>
@@ -366,17 +418,109 @@
     <script>
         /* JS Exercises should go here */
         // Write a JavaScript functionality to add a new link into the navbar
+        const addNewLinkIntoNavbar = function (text) {
+            let navbar = document.querySelector('nav');
+            let newLink = document.createElement('span');
+            newLink.innerText = text;
+            navbar.appendChild(newLink);
+        }
         // Write a JavaScript functionality to change the color of the main heading title
+        const changeTheColorOfTheNainHeadingTitle = function (color) {
+            let title = document.querySelector('.jumbotron h1');
+            title.style.color = color;
+        }
         // Write a JavaScript functionality to change the background of the jumbotron
+        const changeBackgroundColorOfJumbotron = function (color) {
+            let jumbotron  = document.querySelector('.jumbotron');
+            jumbotron.style.backgroundColor = color;
+        }
 
         // Write a JavaScript functionality to remove the “twitter” link under the “Elsewhere” section in the aside element. It should happen when the page loads, automatically
+        const removeTwitterLink = function () {
+            document.querySelector('aside div:nth-of-type(3) ol li:nth-of-type(2)').innerHTML = '';
+        }
 
         // Write a JavaScript functionality to remove the first 50 characters in the first paragraph for every blog post
+        const removeTheFirst50CharactersInTheFirstParagraphForEveryBlogPost = function () {
+            let firstParagraph = document.querySelector('.col-md-8.blog-main div:nth-of-type(1) p:nth-of-type(3)').innerText;
+            let secondParagraph = document.querySelector('.col-md-8.blog-main div:nth-of-type(2) p:nth-of-type(2)').innerText;
+            let thirdParagraph = document.querySelector('.col-md-8.blog-main div:nth-of-type(3) p:nth-of-type(2)').innerText;
+
+            document.querySelector('.col-md-8.blog-main div:nth-of-type(1) p:nth-of-type(3)').innerText = firstParagraph.slice(50);
+            document.querySelector('.col-md-8.blog-main div:nth-of-type(2) p:nth-of-type(2)').innerText = secondParagraph.slice(50);
+            document.querySelector('.col-md-8.blog-main div:nth-of-type(3) p:nth-of-type(2)').innerText = thirdParagraph.slice(50);
+        }
+
         // Write a JavaScript functionality to add a new Blog Post (div with title and text)
+        const addNewBlogpost = function () {
+            let blogArea = document.querySelector('.col-md-8.blog-main');
+
+            let newBlogPost = document.createElement('div');
+            newBlogPost.className = 'blog-post';
+            blogArea.appendChild(newBlogPost);
+
+            let newBlogPostTitle = document.createElement('h2');
+            newBlogPostTitle.className = 'blog-post-title';
+            newBlogPostTitle.innerText = 'Blog post that created using a JS function';
+            newBlogPost.appendChild(newBlogPostTitle);
+
+            let newBlogPostMeta = document.createElement('p');
+            newBlogPostMeta.className = 'blog-post-meta';
+            newBlogPostMeta.innerHTML = 'December 20, 2022 by <a href=`#`>Yasir</a>';
+            newBlogPost.appendChild(newBlogPostMeta);
+            
+            let newBlogPostContent = document.createElement('p');
+            newBlogPostContent.innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nihil odio optio voluptatem! Error sed voluptas qui voluptate. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.';
+            newBlogPost.appendChild(newBlogPostContent);
+        }
+
         // Write a JavaScript functionality to remove the last Blog Post when the user clicks on the "Older" button
+        const removeTheLastBlogPost = function () {
+            let blogArea = document.querySelector('.col-md-8.blog-main');
+            let blogsNode = document.querySelectorAll('.col-md-8.blog-main div:nth-of-type(n)');
+            
+            blogArea.removeChild(blogsNode[blogsNode.length - 1]);
+        }
 
         // Write a JavaScript functionality that will create an alert with the name of the author every time the user hovers the mouse on an author's name
+        const alertAuthorsName = function () {
+            let authorNameArray = document.querySelectorAll(`.col-md-8.blog-main div:nth-of-type(n) .blog-post-meta a`);
+            for (let i = 0; i < authorNameArray.length; i++) {
+                authorNameArray[i].addEventListener('mouseover', () => {
+                    alert(`The author's name is ${authorNameArray[i].innerText}`);
+                })
+            }
+        }
+
         // EXTRA Write a JavaScript functionality that will remove the corresponding parent card from the DOM, upon clicking on their “Continue reading” link
+
+        const removeWhenClickContinueReading  = function () {
+            let mainContainer = document.getElementsByClassName('container')[0];
+
+            let jumbotron  = document.querySelector('.jumbotron');
+            let jumbotronContinueReading = document.querySelector('.jumbotron a');
+            jumbotronContinueReading.addEventListener('click', () => {
+                mainContainer.removeChild(jumbotron);
+            })
+
+            let featuredPost = document.querySelectorAll('.row.mb-2 > div')[0];
+            let featuredPostContinueReading = document.querySelectorAll('.row.mb-2 > div a')[0];
+            featuredPostContinueReading.addEventListener('click', () => {
+                featuredPost.innerHTML = '';
+            })
+
+            let postTitle = document.querySelectorAll('.row.mb-2 > div')[1];
+            let postTitleContinueReading = document.querySelectorAll('.row.mb-2 > div a')[1];
+            postTitleContinueReading.addEventListener('click', () => {
+                postTitle.innerHTML = '';
+            })
+        }
+
+        window.onload = () => {
+            removeTwitterLink();
+            alertAuthorsName();
+            removeWhenClickContinueReading();
+        }
     </script>
 </body>
 
